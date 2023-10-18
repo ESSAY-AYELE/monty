@@ -16,16 +16,17 @@ int main(int argv, char **argc)
 }
 
 /**
- *
+ * readfile - read a file line by line
+ * @filename: the name of the file
  */
 void readfile(char *filename)
 {
 	FILE *file = fopen(filename, "r");
 	char line[1024];
-	char *tmp;
+	char *tmp_1;
 	char **args;
-	int  n = 1;
-	instruction_t *instruction;
+	unsigned int  n = 1;
+	instruction_t tmp;
 
 	if (file == NULL)
 	{
@@ -35,6 +36,44 @@ void readfile(char *filename)
 
 	while (fgets(line, sizeof(line), file))
 	{
-		tmp = remove_leading_space(line);
-		args = tokenize(tmp);
-	
+		tmp_1 = remove_leading_space(line);
+		args = tokenize(tmp_1);
+		tmp = get_function(args);
+		if (tmp == NULL)
+		{
+			fprintf(stderr,"L%u: unknown instruction %s", n, tmp.opcode);
+		       	exit(EXIT_FAILURE);
+		}
+		tmp.f(head, n);
+		n++;
+	}
+}
+
+/**
+ * remove_leading_space - it remove the leading space from the string
+ * @line: the string
+ * Return: new string without leadingspace
+ */
+char *remove_leading_space(char *line)
+{
+	size_t len;
+	char *result;
+	if (line == NULL)
+		return (NULL);
+	while (isspace(*line))
+		line++;
+	len = strlen(line);
+	result = malloc(len + 1);
+
+	if (result == NULL)
+		return (NULL);
+	strcpy(result, line);
+	return (result);
+}
+
+/**
+ *
+ */
+char **tokenize(char *line)
+{
+

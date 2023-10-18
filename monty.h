@@ -37,6 +37,11 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-extern stack_t *head = NULL;
+extern stack_t *head;
+
+void readfile(char *);
+char *remove_leading_space(char *);
+char **tokenize(char *);
+instruction_t get_function(char **);
 
 #endif
