@@ -57,5 +57,6 @@ void readfile(char *);
 char *remove_leading_space(char *);
 char **tokenize(char *);
 instruction_t get_function(char **);
+void free_stack(stack_t *head);
 
 #endif
