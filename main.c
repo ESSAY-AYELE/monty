@@ -116,7 +116,7 @@ char **tokenize(const char *input, int *tokenCount) {
 	}
 
 	free(inputCopy);
-	
+
 	*tokenCount = count;
 	return tokens;
 }
